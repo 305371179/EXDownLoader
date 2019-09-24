@@ -1,0 +1,47 @@
+{
+  "manifest_version": 2,
+  "name": "EXDownLoader",
+  "description": "a wonderful chrome extension with vue",
+  "version": "0.0.1",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "去官网看看源码"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "downloads",
+    "downloads.shelf",
+    "http://*/*",
+    "https://*/*",
+    "*://*/*",
+    "<all_urls>"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "fonts/*",
+    "css/pannel.css"
+  ],
+  "homepage_url": "https://www.baidu.com",
+  "chrome_url_overrides": {
+  },
+  "devtools_page": "devtools.html"
+}

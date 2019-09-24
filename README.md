@@ -1,7 +1,9 @@
 # EXDownLoader 
 `vue-cli3` + `webpack4` + `element-ui`  实现编译打包Chrome浏览器插件<br />
 ## 界面预览
-![界面预览](./screensnap/ui.png)
+![界面预览](./screensnap/ui.png){:height="100" width="100"}
+
+
 
 ## 项目目录
 ![项目结构](./screensnap/project.png)<br/>

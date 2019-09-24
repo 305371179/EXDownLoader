@@ -1,10 +1,7 @@
 # EXDownLoader 
 `vue-cli3` + `webpack4` + `element-ui`  实现编译打包Chrome浏览器插件<br />
 ## 界面预览
-![界面预览](./screensnap/ui.png)<!-- .element height="50%" width="50%" -->
-
-
-
+<img alt="界面预览" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/ui.png"  width="60%">
 ## 项目目录
 ![项目结构](./screensnap/project.png)<br/>
 
@@ -14,7 +11,7 @@
 4、utils/index.js是下载的核心逻辑，所有与chrome api相关的代码都在此文件里面，hot-reload.js是热更新文件。<br/>
 5、panel目录是开发者工具插件的页面。<br/>
 
-![项目结构](./screensnap/panel.png)
+<img alt="项目结构" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/panel.png"  width="60%">
 
 ## 环境安装
 ```
@@ -59,13 +56,17 @@ npm run lint
 1、执行npm run build-watch，可以热更新，但是devtools界面是不能自动刷新的，可以点击页面上的刷新面板按钮进行刷新。<br />
 2、插件安装，两种方式：<br />
    a、加载根目录的dist文件夹<br />
-   ![插件安装](./screensnap/unzip.png)
+   
+   <img alt="打包插件" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/unzip.png"  width="60%">
+
    b、将打包之后的dist.crx直接拖入chrome/qq浏览器/360浏览器等chrome内核浏览器的扩展组件页面里<br />
 3、打包插件，可以直接在谷歌浏览器上打包。打包成功后会在根目录下面生成dist.crx,dist.pem文件。<br />
 
-![打包插件](./screensnap/zip0.png)
+<img alt="打包插件" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/zip0.png"  width="60%">
 
-![打包插件](./screensnap/zip1.png)
+<img alt="打包插件" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/zip1.png"  width="60%">
+
 
 ## 打赏鼓励一下，^_^
-![打包插件](./screensnap/qrcode.jpg)
+
+<img alt="打赏一下" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/qrcode.jpg"  width="60%">

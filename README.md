@@ -1,16 +1,19 @@
-# chrome-extension-downloader
+# EXDownLoader 
 `vue-cli3` + `webpack4` + `element-ui`  实现编译打包Chrome浏览器插件<br />
 ## 界面预览
 ![界面预览](./screensnap/ui.png)
 
 ## 项目目录
-![项目结构](./screensnap/project.png)
+![项目结构](./screensnap/project.png)<br/>
+
 1、dist是生成的插件目录，可以直接被浏览器扩展加载。<br/>
 2、public是静态资源目录，js不会被编译，beautify是格式化html、js、css的工具类，zip是将文件打包成zip格式的工具类。<br/>
 3、src是项目的源码，manifest.development.json和manifest.production.json是插件的manifest配置文件，具体可以查看chrome的文档。<br/>
 4、utils/index.js是下载的核心逻辑，所有与chrome api相关的代码都在此文件里面，hot-reload.js是热更新文件。<br/>
-5、panel目录是开发者工具插件的页面。
+5、panel目录是开发者工具插件的页面。<br/>
+
 ![项目结构](./screensnap/panel.png)
+
 ## 环境安装
 ```
 npm install 或 cnpm install

@@ -40,7 +40,7 @@
     "fonts/*",
     "css/pannel.css"
   ],
-  "homepage_url": "https://www.baidu.com",
+  "homepage_url": "https://github.com/305371179/EXDownLoader",
   "chrome_url_overrides": {
   },
   "devtools_page": "devtools.html"

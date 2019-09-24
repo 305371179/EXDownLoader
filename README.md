@@ -3,15 +3,15 @@
 ## 界面预览
 <img alt="界面预览" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/ui.png"  width="60%">
 ## 项目目录
-![项目结构](./screensnap/project.png)<br/>
-
+<img alt="panel目录" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/project.png"  width="60%">
+<br/>
 1、dist是生成的插件目录，可以直接被浏览器扩展加载。<br/>
 2、public是静态资源目录，js不会被编译，beautify是格式化html、js、css的工具类，zip是将文件打包成zip格式的工具类。<br/>
 3、src是项目的源码，manifest.development.json和manifest.production.json是插件的manifest配置文件，具体可以查看chrome的文档。<br/>
 4、utils/index.js是下载的核心逻辑，所有与chrome api相关的代码都在此文件里面，hot-reload.js是热更新文件。<br/>
 5、panel目录是开发者工具插件的页面。<br/>
 
-<img alt="项目结构" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/panel.png"  width="60%">
+<img alt="panel目录" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/panel.png"  width="60%"><br/>
 
 ## 环境安装
 ```
@@ -58,12 +58,12 @@ npm run lint
    a、加载根目录的dist文件夹<br />
    
    <img alt="打包插件" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/unzip.png"  width="60%">
-
+<br/>
    b、将打包之后的dist.crx直接拖入chrome/qq浏览器/360浏览器等chrome内核浏览器的扩展组件页面里<br />
 3、打包插件，可以直接在谷歌浏览器上打包。打包成功后会在根目录下面生成dist.crx,dist.pem文件。<br />
 
 <img alt="打包插件" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/zip0.png"  width="60%">
-
+<br/>
 <img alt="打包插件" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/zip1.png"  width="60%">
 
 

@@ -11,7 +11,7 @@ const utils = {
     isCheckCache: false,
     isCheckBeautify: true,
     isCheckContent: false,
-    isCurrentDomain:false,
+    isCurrentDomain: false,
     isCheckXHR: false,
     isOpenFolder: true,
     isNotification: true,
@@ -19,29 +19,29 @@ const utils = {
     isResourcesType: false,
     filename: '',
     defaultFilename: 'All',
-    currentFilename:'',
+    currentFilename: '',
     timeout: 5,
 // Resource Collector
     reqs: {},
     noContentReqs: {},
     component: null,
-    setFileName(filename){
+    setFileName(filename) {
         this.filename = filename
-        this.setStorage('filename',filename)
+        this.setStorage('filename', filename)
     },
-    setTimeout(timeout){
+    setTimeout(timeout) {
         this.timeout = timeout
-        this.setStorage('timeout',timeout)
+        this.setStorage('timeout', timeout)
     },
-    setSettings(settings){
-        Object.assign(this,settings)
-        this.setStorage('settings',settings)
+    setSettings(settings) {
+        Object.assign(this, settings)
+        this.setStorage('settings', settings)
     },
-    setStorage(key,value){
+    setStorage(key, value) {
         return new Promise(resolve => {
             let obj = {}
             obj[key] = value
-            chrome.storage.sync.set(obj, function() {
+            chrome.storage.sync.set(obj, function () {
                 resolve()
 
                 // utils.getStorage('settings').then(value=>{
@@ -51,21 +51,21 @@ const utils = {
             });
         })
     },
-    getStorage(key){
+    getStorage(key) {
         return new Promise(resolve => {
-            let obj={}
+            let obj = {}
             obj[key] = null
-            chrome.storage.sync.get(obj, function(value) {
+            chrome.storage.sync.get(obj, function (value) {
                 resolve(value)
             });
         })
     },
-    captureWindow(callback){
+    captureWindow(callback) {
         chrome.tabs.captureVisibleTab(null, null, callback)
     },
-    openWindow(url){
+    openWindow(url) {
         chrome.tabs.create({
-            url:url,
+            url: url,
         })
     },
     debounce(func, wait, immediate) {
@@ -129,7 +129,7 @@ const utils = {
             } else {
                 getResources()
             }
-        },150);
+        }, 150);
         let getResources = () => {
             this.getResources((resources) => {
                 // resources.forEach(r=>{
@@ -137,30 +137,32 @@ const utils = {
                 // })
                 if (!this.component.isDownloading) {
                     this.component.resources = resources
-                    if(this.component.requests.length){
+                    if (this.component.requests.length) {
                         let result = []
-                        this.component.requests.forEach(entry=>{
-                           const index =  this.component.resources.findIndex(it=>{
-                               // console.log(item.request.url,it.url,66666)
+                        this.component.requests.forEach(entry => {
+                            const index = this.component.resources.findIndex(it => {
+                                // console.log(item.request.url,it.url,66666)
                                 return entry.request.url === it.url
                             })
-                            if(index===-1){
+                            if (index === -1) {
                                 let mimeType = entry.response.content.mimeType || 'text/plain'
-                                if(mimeType.indexOf('audio')!==-1 || mimeType.indexOf('video')!==-1){
+                                if (mimeType.indexOf('audio') !== -1 || mimeType.indexOf('video') !== -1) {
                                     mimeType = 'media'
                                     // console.log(entry.response)
                                     // console.log(this.component.resources[0].getContent((a)=>{
                                     //     console.log(a,6666)
                                     // }))
-                                }else{
+                                } else {
                                     mimeType = 'xhr'
                                 }
-                               result.push(Object.assign({}, {
-                                   url:entry.request.url,
-                                   getContent: entry.getContent || (()=>{return true}),
-                                   type: mimeType,//,
-                                   isStream: (entry.response.content.mimeType || '').indexOf('event-stream') !== -1
-                               }))
+                                result.push(Object.assign({}, {
+                                    url: entry.request.url,
+                                    getContent: entry.getContent || (() => {
+                                        return true
+                                    }),
+                                    type: mimeType,//,
+                                    isStream: (entry.response.content.mimeType || '').indexOf('event-stream') !== -1
+                                }))
                             }
                         })
                         // console.log(result,666666)
@@ -176,20 +178,20 @@ const utils = {
         }
         getResources()
         let count = 0
-        let interval = setInterval(()=>{
-            if(++count>10){
+        let interval = setInterval(() => {
+            if (++count > 10) {
                 clearInterval(interval)
             }
             setResourceCount()
-        },500)
+        }, 500)
 
         // //This can be used for identifying when ever a new resource is added
-        chrome.devtools.inspectedWindow.onResourceAdded.addListener( (resource)=> {
+        chrome.devtools.inspectedWindow.onResourceAdded.addListener((resource) => {
             setResourceCount()
         });
         //
         // //This can be used to detect when ever a resource code is changed/updated
-        chrome.devtools.inspectedWindow.onResourceContentCommitted.addListener((resource, content)=> {
+        chrome.devtools.inspectedWindow.onResourceContentCommitted.addListener((resource, content) => {
             setResourceCount()
         });
     },
@@ -202,11 +204,11 @@ const utils = {
     resetResourceCollector() {
         this.reqs = {};
     },
-    preview(url){
+    preview(url) {
         chrome.devtools.panels.openResource(
             url,  //要打开的资源的URL
             0,//指定资源加载时需要滚动到的行号
-            function callback(){
+            function callback() {
                 //成功加载资源后会调用
             }
         )
@@ -219,7 +221,7 @@ const utils = {
             // Disable download notification
             try {
                 chrome.downloads.setShelfEnabled(false);
-            }catch (e) {
+            } catch (e) {
                 console.error(e)
             }
 
@@ -228,13 +230,13 @@ const utils = {
                 let domain = tab.url.split('://')[1].substring(0, tab.url.split('://')[1].indexOf('/'));
                 this.getResources((resources) => {
                     //过滤掉没用的资源，谷歌自身的扩展和开发环境的webpack资源
-                    let allResources = this.filter(xhrResources.concat(resources,this.component.resources))
+                    let allResources = this.filter(xhrResources.concat(resources, this.component.resources))
                     // sendMessage(allResources)
-                    if(selectItems){
+                    if (selectItems) {
                         let rs = []
                         for (let i = 0; i < selectItems.length; i++) {
                             let item = selectItems[i]
-                            let index = allResources.findIndex(it=>{
+                            let index = allResources.findIndex(it => {
                                 return it.url === item.url
                             })
                             rs.push(allResources[index])
@@ -242,12 +244,20 @@ const utils = {
                         allResources = rs
                     }
                     this.component.downInfo.files = allResources
-                    this.download(allResources,domain,selectItems)
+                    this.download(allResources, domain, selectItems)
                 });
             })
         })
     },
-    download(allResources,domain,selectItems){
+    getCurrentUrl(callback) {
+        chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+            if (!tabs) {
+                return
+            }
+            callback && callback(tabs[0].url)
+        });
+    },
+    download(allResources, domain, selectItems) {
         this.processContentFromResources(allResources, (combineResources) => {
             // Filter Resource here
             if (this.isCheckHAR) {
@@ -275,7 +285,7 @@ const utils = {
                     if (!combineResources[i].url.includes('Chrome/Default/Extensions')) {
                         // Matching with current snippet URL
                         //TODO 同源的才能下载吗？
-                        if (!domain||!this.isCurrentDomain || (this.isCurrentDomain&&combineResources[i].url.indexOf('://' + domain) >= 0)) {
+                        if (!domain || !this.isCurrentDomain || (this.isCurrentDomain && combineResources[i].url.indexOf('://' + domain) >= 0)) {
                             let foundIndex = this.toDownload.findIndex((item) => {
                                 return item.url === combineResources[i].url
                             });
@@ -301,13 +311,14 @@ const utils = {
 
             for (let key in this.noContentReqs) {
                 let url = this.noContentReqs[key]
-                if(!this.reqs[url]){
+                if (!this.reqs[url]) {
                     let _this = this
                     chrome.downloads.download({
                         url: url, //currentURL.url
-                        filename:  'delay_resources/' + _this.getFileNameExt(url),
+                        filename: 'delay_resources/' + _this.getFileNameExt(url),
                         saveAs: false
-                    },()=>{})
+                    }, () => {
+                    })
                 }
             }
 
@@ -319,35 +330,35 @@ const utils = {
                 // No need to turn off notification for only one zip file
                 try {
                     chrome.downloads.setShelfEnabled(true);
-                }catch (e) {
+                } catch (e) {
                     console.error(e)
                 }
 
                 this.downloadZipFile(this.toDownload, () => {
                     this.allDone()
-                },selectItems);
+                }, selectItems);
             } else {
                 this.downloadListWithThread(this.toDownload, this.downloadThread, () => {
                     this.allDone()
-                },selectItems);
+                }, selectItems);
             }
         });
     },
-    filter(resources){
-        return resources.filter((item)=>{
+    filter(resources) {
+        return resources.filter((item) => {
             return !(item.url.startsWith('webpack') || item.url.startsWith('chrome') || item.type === 'sm-script')
         })
     },
-    downloadListWithThread(toDownload, threadCount, callback,selectItems) {
+    downloadListWithThread(toDownload, threadCount, callback, selectItems) {
         let currentList = toDownload.slice(0, threadCount);
         let restList = toDownload.slice(threadCount);
-        this.downloadURLs(currentList,  ()=> {
+        this.downloadURLs(currentList, () => {
             if (currentList.length > 0 && restList.length > 0) {
-                this.downloadListWithThread(restList, threadCount, callback,selectItems);
+                this.downloadListWithThread(restList, threadCount, callback, selectItems);
             } else {
                 callback();
             }
-        },selectItems);
+        }, selectItems);
     },
     resolveURLToPath(cUrl, cType, cContent) {
         let filepath, filename, isDataURI;
@@ -477,21 +488,21 @@ const utils = {
             dataURI: isDataURI && cUrl
         }
     },
-    setOutputFilename(filepath,currentURL,selectItems){
+    setOutputFilename(filepath, currentURL, selectItems) {
         // sendMessage(filepath + ' '+JSON.stringify(currentURL))
-        let filename = (this.filename?this.filename: this.defaultFilename)
-            if(this.isTimestamp){
-                filename += '_' + this.timestamp
-            }
-            // sendMessage(filename)
-            this.component.downInfo.filename = filename
-            if(this.isResourcesType){
-                filename += '/' + currentURL.type + '/' + this.getFileNameExt(filepath)
-            }else{
-                filename += '/' + filepath
-            }
+        let filename = (this.filename ? this.filename : this.defaultFilename)
+        if (this.isTimestamp) {
+            filename += '_' + this.timestamp
+        }
+        // sendMessage(filename)
+        this.component.downInfo.filename = filename
+        if (this.isResourcesType) {
+            filename += '/' + currentURL.type + '/' + this.getFileNameExt(filepath)
+        } else {
+            filename += '/' + filepath
+        }
 
-        if(selectItems&&selectItems.length ===1){
+        if (selectItems && selectItems.length === 1) {
             filename = this.getFileNameExt(currentURL.url)
         }
         return filename
@@ -542,7 +553,7 @@ const utils = {
                     try {
                         chrome.downloads.download({
                                 url: finalURI, //currentURL.url
-                                filename:this.setOutputFilename(filepath,currentURL,selectItems),
+                                filename: this.setOutputFilename(filepath, currentURL, selectItems),
                                 saveAs: false
                             },
                             (downloadId) => {
@@ -577,7 +588,7 @@ const utils = {
                 try {
                     chrome.downloads.download({
                             url: currentURL.url,
-                            filename: this.setOutputFilename(filepath,currentURL,selectItems),
+                            filename: this.setOutputFilename(filepath, currentURL, selectItems),
                             saveAs: false
                         },
                         (downloadId) => {
@@ -661,23 +672,22 @@ const utils = {
             }
         });
     },
-    chromeDownload(url,callback){
+    chromeDownload(url, callback,filename="screenshot") {
         try {
-            let filename = 'screenshot'
-            if(this.isTimestamp){
-                filename+='_'+Date.now()
+            if (this.isTimestamp) {
+                filename += '_' + Date.now()
             }
             chrome.downloads.download({
                     url: url,
                     filename: `${filename}.jpg`,
                     saveAs: false
-                },()=>{
-                    callback&&callback()
+                }, () => {
+                    callback && callback()
                     this.allDone(true)
                 }
             );
         } catch (runTimeErr) {
-            callback&&callback()
+            callback && callback()
             this.allDone()
             console.log(runTimeErr)
         }
@@ -693,7 +703,7 @@ const utils = {
         // Re-enable Download notification
         try {
             chrome.downloads.setShelfEnabled(true);
-        }catch (e) {
+        } catch (e) {
             console.error(e)
         }
 
@@ -702,7 +712,7 @@ const utils = {
         if (isSuccess) {
             // console.log(this.zipSize,666666)
             this.zipSize = 0
-            if(this.isOpenFolder){
+            if (this.isOpenFolder) {
                 chrome.downloads.showDefaultFolder()
             }
             // if(this.isNotification){
@@ -713,11 +723,11 @@ const utils = {
         } else {
             this.component.downInfo.isSuccess = false
         }
-        if(this.isNotification){
+        if (this.isNotification) {
             this.component.allDone()
         }
     },
-    notification(){
+    notification() {
         chrome.notifications.create(null, {
             type: 'basic',
             iconUrl: 'logo.png',
@@ -725,7 +735,7 @@ const utils = {
             message: '下载成功'
         });
     },
-    downloadZipFile(toDownload, callback,selectItems) {
+    downloadZipFile(toDownload, callback, selectItems) {
         if (zip) {
             zip.workerScriptsPath = "zip/";
             this.getAllToDownloadContent(toDownload, (result) => {
@@ -740,7 +750,7 @@ const utils = {
                         // console.log('Final Duplicated: ', item.url);
                     }
                 });
-                if(selectItems&&selectItems.length === 1){
+                if (selectItems && selectItems.length === 1) {
                     result[0].url = this.getFileNameExt(result[0].url)
                 }
                 // sendMessage(result)
@@ -750,7 +760,7 @@ const utils = {
                 this.component.downInfo.success = newResult
                 zip.createWriter(new zip.BlobWriter(), (blobWriter) => {
                     this.addItemsToZipWriter(blobWriter, newResult, () => {
-                        this.downloadCompleteZip(blobWriter, callback,selectItems)
+                        this.downloadCompleteZip(blobWriter, callback, selectItems)
                     });
                 }, (err) => {
                     console.error('ERROR: ', err.message, err.stack);
@@ -779,7 +789,7 @@ const utils = {
                     if (pendingDownloads === 0) {
                         callback(result);
                     }
-                }, this.timeout*1000);
+                }, this.timeout * 1000);
 
                 item.getContent((body, encode) => {
                     // Cancel the timeout above
@@ -854,19 +864,19 @@ const utils = {
             }
         });
     },
-    downloadCompleteZip(blobWriter, callback,selectItems) {
+    downloadCompleteZip(blobWriter, callback, selectItems) {
         blobWriter.close((blob) => {
             chrome.tabs.get(
                 chrome.devtools.inspectedWindow.tabId, (tab) => {
                     let url = new URL(tab.url);
                     let filename = url.hostname ? url.hostname.replace(/([^A-Za-z0-9\.])/g, "_") : this.defaultFilename;
-                    if(this.filename){
+                    if (this.filename) {
                         filename = this.filename
                     }
-                    if(this.isTimestamp){
-                        filename+='_'+this.timestamp
+                    if (this.isTimestamp) {
+                        filename += '_' + this.timestamp
                     }
-                    if(selectItems&&selectItems.length === 1){
+                    if (selectItems && selectItems.length === 1) {
                         filename = this.getFileName(selectItems[0].url)
                     }
                     this.component.downInfo.filename = filename
@@ -878,11 +888,11 @@ const utils = {
                 });
         })
     },
-    getFileName(url){
-      return this.getFileNameExt(url).split('.')[0]
+    getFileName(url) {
+        return this.getFileNameExt(url).split('.')[0]
     },
-    getFileNameExt(url){
-      return   url.substring(url.lastIndexOf('/')+1)
+    getFileNameExt(url) {
+        return url.substring(url.lastIndexOf('/') + 1)
     },
     addItemsToZipWriter(blobWriter, items, callback) {
         let item = items[0];
@@ -951,7 +961,7 @@ const utils = {
                     if (!isNoContent) {
 
                         console.log(resolvedContent.size, item.encoding || 'No Encoding', item.url, item.name);
-                        if(!this.zipSize){
+                        if (!this.zipSize) {
                             this.zipSize = 0
                         }
                         this.zipSize += resolvedContent.size
@@ -1063,7 +1073,7 @@ const utils = {
                 if (count === combineResources.length) {
                     cb(combineResources);
                 }
-            }, this.timeout*1000);
+            }, this.timeout * 1000);
             item.getContent(function (body, encoding) {
                 clearTimeout(getContentTimeout);
                 combineResources[index].getContent = function (cb) {
@@ -1090,17 +1100,17 @@ function sendMessageToContentScript(message, callback) {
         //     if(!tabs){
         //         return
         //     }
-            chrome.tabs.sendMessage(chrome.devtools.inspectedWindow.tabId, message, function (response) {
-                if (callback) callback(response);
-            });
+        chrome.tabs.sendMessage(chrome.devtools.inspectedWindow.tabId, message, function (response) {
+            if (callback) callback(response);
+        });
         // });
-    }catch (e) {
+    } catch (e) {
         console.error(e)
     }
 
 }
 
-window.sendMessage = (message)=> {
+window.sendMessage = (message) => {
     console.log(message)
     return
     //调试用
@@ -1108,6 +1118,6 @@ window.sendMessage = (message)=> {
     });
 }
 
-window.onerror = (e) => {
-    sendMessage(e.message + " " + e.stack)
-}
+// window.onerror = (e) => {
+//     sendMessage(e.message + " " + e.stack)
+// }

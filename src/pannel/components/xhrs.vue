@@ -171,18 +171,18 @@
             //     // CodeMirror-line
             // },
 
-            copySuccess(){
-                this.$message({
-                    type: 'success',
-                    message: '复制成功'
-                })
-            },
-            copyError(){
-                this.$message({
-                    type: 'error',
-                    message: '复制失败'
-                })
-            },
+            // copySuccess(){
+            //     this.$message({
+            //         type: 'success',
+            //         message: '复制成功'
+            //     })
+            // },
+            // copyError(){
+            //     this.$message({
+            //         type: 'error',
+            //         message: '复制失败'
+            //     })
+            // },
             download(item){
                 utils.save([item.row])
             },

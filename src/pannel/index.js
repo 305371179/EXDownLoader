@@ -1,7 +1,7 @@
 import '../utils/hot-reload'
 import Vue from "vue";
 import AppComponent from "./App/App.vue";
-import router from './router'
+// import router from './router'
 // import VueCodemirror from 'vue-codemirror'
 // import 'codemirror/lib/codemirror.css'
 // import 'codemirror/mode/javascript/javascript'
@@ -47,7 +47,7 @@ Vue.component("app-component", AppComponent);
 
 new Vue({
   el: "#app",
-  router,
+  // router,
   render: createElement => {
     return createElement(AppComponent);
   }

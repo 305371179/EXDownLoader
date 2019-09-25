@@ -14,7 +14,7 @@
         <div class="top-container">
             <h1>
                 <el-tooltip class="item" effect="dark" content="点击去github查看源码，顺便给个星吧，^_^" placement="top-start">
-                    <el-link class="title" @click="href">{{name}}</el-link>
+                    <el-link class="title" @click="href"><img style="border-radius: 100%;" width="20" src="../../../public/logo.png" alt="">{{name}}</el-link>
                 </el-tooltip>
             </h1>
             <div class="button-container">

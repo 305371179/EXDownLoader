@@ -13,16 +13,18 @@
                     <div :style="{visibility:!show? 'visible':'hidden'}" class="desc" v-for="(d,index) in desc" :key="index">{{index+1}}、{{d}}</div>
                 </div>
             </el-tooltip>
+            <div :style="{visibility:!isZan? 'visible':'hidden'}">
+                <el-button size="medium" type="primary" v-clipboard:copy="url" class="capture" >复制链接</el-button>
+                <el-button :loading="isQrcodeLoading" size="medium" type="primary" class="capture" style="margin-left: 0;margin-top: 10px;" @click="downQrcode">下载二维码</el-button>
+                <el-button :loading="isCaptureLoading" size="medium" type="success" class="capture" style="margin-left: 0;margin-top: 10px;" @click="captureWindow">截屏</el-button>
+            </div>
 
-            <el-button size="medium" type="primary" v-clipboard:copy="url" class="capture" >复制链接</el-button>
-            <el-button :loading="isQrcodeLoading" size="medium" type="primary" class="capture" style="margin-left: 0;margin-top: 10px;" @click="downQrcode">下载二维码</el-button>
-            <el-button :loading="isCaptureLoading" size="medium" type="success" class="capture" style="margin-left: 0;margin-top: 10px;" @click="captureWindow">截屏</el-button>
+<!--            <el-button size="medium"  class="capture" style="margin-left: 0;margin-top: 10px;" @click="show=true">赞助</el-button>-->
+            <el-checkbox v-model="isZan" class="capture" style="margin-left: 0;margin-top: 10px;" label="赞助" border></el-checkbox>
         </div>
 
 
         <div class="dashangDiv" v-show="show" @click="show = false">
-            <!--            <img src="../../assets/qrcode.jpg" alt="">-->
-
             <canvas
                     :style="{
       height: `${size}px`,
@@ -38,6 +40,7 @@
             >
             <img class="mu-qrcode__logo" v-if="logo" :src="logo">
         </div>
+        <img src="../../assets/qrcode.jpg" width="100%" alt="" style="position: absolute;left:0;right:0; top:68px;margin: auto;" v-if="isZan">
     </el-card>
 </template>
 
@@ -70,7 +73,8 @@
                 logo: '',
                 url: '',
                 isCaptureLoading: false,
-                isQrcodeLoading: false
+                isQrcodeLoading: false,
+                isZan: false
             }
         },
         mounted() {
@@ -147,7 +151,7 @@
 <style>
     .box-card {
         width: 300px;
-        height:500px;
+        height:550px;
         position: relative;
     }
 

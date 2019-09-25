@@ -1,5 +1,5 @@
 # EXDownLoader 
-`vue-cli3` + `webpack4` + `element-ui`  实现编译打包Chrome浏览器插件<br />
+`vue-cli3` + `webpack4` + `element-ui`  实现编译打包Chrome浏览器插件，集下载、截屏、二维码于一身<br />
 ## 界面预览
 <img alt="界面预览" src="https://raw.githubusercontent.com/305371179/EXDownLoader/master/screensnap/ui.png"  width="60%">
 ## 项目目录

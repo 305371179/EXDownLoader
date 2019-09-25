@@ -1,11 +1,16 @@
 {
   "manifest_version": 2,
   "name": "EXDownLoader",
-  "description": "a wonderful chrome extension with vue",
+  "description": "下载网站资源、截屏、生成链接二维码，一'件'搞定",
   "version": "0.0.1",
+  "icons":
+  {
+    "128": "logo.png"
+  },
   "browser_action": {
+    "default_icon": "logo.png",
     "default_popup": "popup.html",
-    "default_title": "去官网看看源码"
+    "default_title": "EXDownloader"
   },
   "background": {
     "page": "background.html"

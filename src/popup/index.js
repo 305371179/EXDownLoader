@@ -9,7 +9,8 @@ import {
   Button,
   Link,
     Loading,
-    Tooltip
+    Tooltip,
+    Checkbox
   // Message
 } from 'element-ui';
 Vue.use(Link)
@@ -17,6 +18,7 @@ Vue.use(Card);
 Vue.use(Button);
 Vue.use(Loading);
 Vue.use(Tooltip);
+Vue.use(Checkbox);
 // Vue.use(Message);
 
 new Vue({

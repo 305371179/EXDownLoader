@@ -37,7 +37,7 @@
             <el-table-column
                     prop="name"
                     label="名称"
-                    width="120">
+                    width="200">
                 <template slot-scope="scope">
                     {{ scope.row.url | name}}
                 </template>

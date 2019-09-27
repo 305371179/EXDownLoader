@@ -8,7 +8,7 @@ export default {
     },
     filters:{
         name(value){
-            return value.substring(value.lastIndexOf('/')+1).split('?')[0]
+            return utils.getFileNameExt(value)
         },
         decode(value){
             return decodeURIComponent(value)
@@ -43,7 +43,11 @@ export default {
         }
         setTimeout(()=>{
             this.resize()
-        },200)
+        },500)
+
+        setTimeout(()=>{
+            this.resize()
+        },1500)
 
         window.addEventListener('resize',this.resize)
     },

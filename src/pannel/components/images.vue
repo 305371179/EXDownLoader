@@ -22,7 +22,7 @@
             </el-table-column>
             <el-table-column
                     label="操作"
-                    width="300">
+                    width="260">
                 <template slot-scope="scope">
                     <el-button size="mini"  @click="download(scope)">下载</el-button>
                     <el-button size="mini"
@@ -36,14 +36,18 @@
             </el-table-column>
             <el-table-column
                     label="预览"
-                    width="120">
-                <el-image  width="120" slot-scope="scope" :src="scope.row.url"  :preview-src-list="[scope.row.url]"  @load="load($event,scope)"></el-image>
+                    width="140">
+                <el-image v-if="!isBlob(scope.row.url)"  width="120" slot-scope="scope" :src="scope.row.url"  :preview-src-list="[scope.row.url]"  @load="load($event,scope)"></el-image>
+                <span v-else>
+                    blob图片无法预览
+                </span>
+<!--                <img  width="120" slot-scope="scope" :src="scope.row.url"  :preview-src-list="[scope.row.url]"  @load="load($event,scope)"></img>-->
 
             </el-table-column>
             <el-table-column
                     prop="name"
                     label="名称"
-                    width="120">
+                    width="200">
                 <template slot-scope="scope">
                     {{ scope.row.url | name}}
                 </template>
@@ -117,6 +121,9 @@
             }
         },
         methods:{
+            isBlob(url){
+                return url.startsWith('blob:')
+            },
             openWindow(scope){
                 utils.preview(scope.row.url)
                 // utils.openWindow(scope.row.url)

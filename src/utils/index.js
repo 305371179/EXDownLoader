@@ -152,7 +152,9 @@ const utils = {
                                     // console.log(this.component.resources[0].getContent((a)=>{
                                     //     console.log(a,6666)
                                     // }))
-                                } else {
+                                } else if(mimeType.indexOf('image')!==-1){
+
+                                }else{
                                     mimeType = 'xhr'
                                 }
                                 result.push(Object.assign({}, {
@@ -176,7 +178,6 @@ const utils = {
                 // sendMessage(this.component.requests)
             })
         }
-        getResources()
         let count = 0
         let interval = setInterval(() => {
             if (++count > 10) {
@@ -184,7 +185,7 @@ const utils = {
             }
             setResourceCount()
         }, 500)
-
+        setResourceCount()
         // //This can be used for identifying when ever a new resource is added
         chrome.devtools.inspectedWindow.onResourceAdded.addListener((resource) => {
             setResourceCount()
@@ -892,7 +893,8 @@ const utils = {
         return this.getFileNameExt(url).split('.')[0]
     },
     getFileNameExt(url) {
-        return url.substring(url.lastIndexOf('/') + 1)
+        url = url.split('?')[0]
+        return decodeURIComponent(url.substring(url.lastIndexOf('/') + 1))
     },
     addItemsToZipWriter(blobWriter, items, callback) {
         let item = items[0];

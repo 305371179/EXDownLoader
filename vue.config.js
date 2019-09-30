@@ -3,7 +3,7 @@ const ZipPlugin = require('zip-webpack-plugin')
 const path = require("path");
 const pagesObj = {};
 const chromeName = ["popup", "options","background",'pannel','devtools'];
-
+const {name} = require('./src/manifest.development')
 chromeName.forEach(name => {
   pagesObj[name] = {
     entry: `src/${name}/index.js`,
@@ -16,10 +16,10 @@ chromeName.forEach(name => {
 const manifest =
   process.env.NODE_ENV === "production" ? {
     from: path.resolve("src/manifest.production.json"),
-    to: `${path.resolve("dist")}/manifest.json`
+    to: `${path.resolve(name)}/manifest.json`
   } : {
     from: path.resolve("src/manifest.development.json"),
-    to: `${path.resolve("dist")}/manifest.json`
+    to: `${path.resolve(name)}/manifest.json`
   };
 
 const plugins = [
@@ -31,7 +31,7 @@ if (process.env.NODE_ENV !== 'production') {
   plugins.push(
     CopyWebpackPlugin([{
       from: path.resolve("src/utils/hot-reload.js"),
-      to: path.resolve("dist")
+      to: path.resolve(name)
     }])
   )
 }
@@ -41,12 +41,13 @@ if (process.env.NODE_ENV === 'production') {
   plugins.push(
       new ZipPlugin({
         path: path.resolve(""),
-        filename: 'dist.zip',
+        filename: `${name}.zip`,
       })
   )
 }
 
 module.exports = {
+  outputDir: name,
   pages: pagesObj,
   // // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,

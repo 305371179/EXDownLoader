@@ -16,6 +16,9 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+*.crx
+*.pem
+*.zip
 
 yarn.lock
 package-lock.json

@@ -156,6 +156,7 @@
             load(e,scope){
                 this.sizes[scope.row.url] = {width: e.target.naturalWidth,height: e.target.naturalHeight}
                 this.setTableData()
+                this.resize && this.resize()
             },
             handleSelectionChange(val) {
                 this.multipleSelection = val;
